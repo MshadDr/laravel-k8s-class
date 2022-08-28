@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-php-fpm
+  labels:
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-php-fpm
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: app-php-fpm
+        tier: backend
+    spec:
+      volumes:
+      - name: dir
+        hostPath:
+          path: /code
+      containers:
+      - name: app-php-fpm
+        image: repo.alo-dev.com/docker/php:8.1-fpm-alpine
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: dir
+          mountPath: /code
+        ports:
+        - containerPort: 9000
+
+

@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+    tier: backend
+spec:
+  selector:
+    app: nginx
+    tier: backend
+  type: NodePort
+  ports:
+  - name: "80"
+    protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 32380
