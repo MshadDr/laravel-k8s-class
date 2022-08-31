@@ -2,41 +2,33 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
-  labels:
-    app: nginx
-    tier: backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: k8s-laravel
       tier: backend
   template:
     metadata:
       labels:
-        app: nginx
+        app: k8s-laravel
         tier: backend
     spec:
-      volumes:
-      - name: dir
-        hostPath:
-          path: /code
-      - name: config
-        configMap:
-          name: nginx-config
-          items:
-          - key: config
-            path: site.conf
       containers:
       - name: nginx
         image: repo.alo-dev.com/docker/nginx:alpine
         imagePullPolicy: IfNotPresent
-        volumeMounts:
-        - name: dir
-          mountPath: /code
-        - name: config
-          mountPath: /etc/nginx/conf.d
         ports:
         - containerPort: 80
-          name: http
-          protocol: TCP
+        volumeMounts:
+          - mountPath: /etc/configMap/configMap.yml
+            subPath: configMap.yml
+            readOnly: true
+            name: config
+      volumes:
+      - name: config
+        configMap:
+          name: nginx-conf
+          items:
+          - key: config
+            path: nginx.conf
