@@ -1,19 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-php-fpm
-  labels:
-    tier: backend
+  name: app-laravel
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app-php-fpm
+      app: k8s-laravel
       tier: backend
   template:
     metadata:
       labels:
-        app: app-php-fpm
+        app: k8s-laravel
         tier: backend
     spec:
       volumes:
@@ -21,13 +19,18 @@ spec:
         hostPath:
           path: /code
       containers:
-      - name: app-php-fpm
-        image: repo.alo-dev.com/docker/php:8.1-fpm-alpine
+      - name: app-laravel
+        image: mshad/laravel-k8s:0.1
         imagePullPolicy: IfNotPresent
         volumeMounts:
-        - name: dir
-          mountPath: /code
-        ports:
-        - containerPort: 9000
-
-
+          - name: dir
+            mountPath: /code
+        env:
+          - name: APP_NAME
+            value: "test-laravel-k8s"
+          - name: APP_ENV
+            value: "development"
+          - name: APP_KEY
+            value: "base64:cZ7e0d4RO7v6TpPz+Z0mE6PAkGeOFj66lRQAuRc5QmY="
+          - name: APP_DEBUG
+            value: "true"

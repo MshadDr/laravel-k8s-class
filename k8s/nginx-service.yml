@@ -1,18 +1,19 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: nginx
+  name: nginx-svc
   labels:
-    app: nginx
+    app: k8s-laravel
     tier: backend
 spec:
   selector:
-    app: nginx
+    app: k8s-laravel
     tier: backend
-  type: NodePort
+  type: LoadBalancer
   ports:
-  - name: "80"
-    protocol: TCP
-    port: 80
-    targetPort: 80
-    nodePort: 32380
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 32003
+

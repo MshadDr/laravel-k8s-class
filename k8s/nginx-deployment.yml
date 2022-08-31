@@ -21,14 +21,12 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-          - mountPath: /etc/configMap/configMap.yml
-            subPath: configMap.yml
-            readOnly: true
+          - mountPath: /etc/nginx/conf.d
             name: config
       volumes:
-      - name: config
-        configMap:
-          name: nginx-conf
-          items:
-          - key: config
-            path: nginx.conf
+        - name: config
+          configMap:
+            name: nginx-conf
+            items:
+              - key: config
+                path: nginx.conf
