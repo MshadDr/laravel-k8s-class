@@ -6,25 +6,27 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: k8s-laravel
+      app: app-laravel
       tier: backend
   template:
     metadata:
       labels:
-        app: k8s-laravel
+        app: app-laravel
         tier: backend
     spec:
       volumes:
       - name: dir
         hostPath:
-          path: /code
+          path: /app
       containers:
       - name: app-laravel
         image: mshad/laravel-k8s:0.1
         imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 9000
         volumeMounts:
           - name: dir
-            mountPath: /code
+            mountPath: /app
         env:
           - name: APP_NAME
             value: "test-laravel-k8s"
