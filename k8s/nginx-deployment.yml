@@ -2,17 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
+  labels:
+    app: nginx
+    tier: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: nginx
-      tier: backend
+      tier: frontend
   template:
     metadata:
       labels:
         app: nginx
-        tier: backend
+        tier: frontend
     spec:
       containers:
       - name: nginx
@@ -27,6 +30,3 @@ spec:
         - name: nginx-conf
           configMap:
             name: nginx-conf
-            items:
-              - key: nginx.conf
-                path: default.conf

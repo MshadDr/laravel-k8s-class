@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-laravel
+  labels:
+    app: app-laravel
+    tier: backend
 spec:
   replicas: 1
   selector:
@@ -20,13 +23,11 @@ spec:
           path: /app
       containers:
       - name: app-laravel
-        image: mshad/laravel-k8s:0.1
+        image: 470md2987md/lv-k8s:0.0.1
         imagePullPolicy: IfNotPresent
-        ports:
-          - containerPort: 9000
         volumeMounts:
-          - name: dir
-            mountPath: /app
+        - name: dir
+          mountPath: /var/www/html
         env:
           - name: APP_NAME
             value: "test-laravel-k8s"
