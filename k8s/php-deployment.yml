@@ -20,14 +20,14 @@ spec:
       volumes:
       - name: dir
         hostPath:
-          path: /app
+          path: /code
       containers:
       - name: app-laravel
-        image: 470md2987md/lv-k8s:0.0.1
+        image: 470md2987md/lv-k8s:0.0.2
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: dir
-          mountPath: /var/www/html
+          mountPath: /code
         env:
           - name: APP_NAME
             value: "test-laravel-k8s"

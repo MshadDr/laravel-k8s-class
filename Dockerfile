@@ -1,5 +1,5 @@
 FROM php:8.1-fpm-alpine
 
-COPY . /app
+COPY . /var/www/html/app
 
-EXPOSE 9001
+EXPOSE 900

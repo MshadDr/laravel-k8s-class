@@ -26,7 +26,12 @@ spec:
         volumeMounts:
           - mountPath: /etc/nginx/conf.d
             name: nginx-conf
+          - mountPath: /code
+            name: dir
       volumes:
+        - name: dir
+          hostPath:
+            path: /code
         - name: nginx-conf
           configMap:
             name: nginx-conf
